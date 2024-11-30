@@ -24,14 +24,17 @@ const TotalAccountBalance = ({ totalBalance }) => {
   }, [totalBalance]);
 
   return (
-    <div className="bg-blue-500 mx-4 rounded flex items-center justify-between p-4">
+    <div className="bg-blue-500 mx-4 rounded-xl flex items-center justify-between p-4">
       <div>
         <h2 className="font-semibold text-white text-2xl mb-1">HDFC</h2>
         <p className="text-white text-lg mb-0">HDFC growth savings account</p>
         <p className="text-white text-sm mt-1">**** **** **** 999</p>
       </div>
-      <div>
-        <h3 className="text-white text-3xl font-bold mr-6">
+      <div className="rounded-xl mr-1 p-3 bg-white/20 backdrop-blur-md shadow-lg ">
+        <p className="text-white text-base font-normal mb-1 mr-3 text-right">
+          Current Balance
+        </p>
+        <h3 className="text-white text-3xl font-semibold mr-6">
           ₹{animatedBalance}
         </h3>
       </div>

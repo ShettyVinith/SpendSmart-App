@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 const transactions = [
   {
@@ -83,43 +83,92 @@ const transactions = [
   },
 ];
 
-const RecentTransactions = () => (
-  <div className="bg-white shadow rounded-md p-6">
-    <h2 className="text-2xl font-bold text-gray-800 mb-4">
-      Recent Transactions
-    </h2>
+const categories = [
+  "All",
+  "Food",
+  "Health",
+  "Housing",
+  "Transport",
+  "Education",
+  "Entertainment",
+  "Utilities",
+  "Income",
+  "Work",
+];
 
-    <div id="transactionslist" className="overflow-auto max-h-96">
-      <table className="min-w-full table-auto">
-        <thead>
-          <tr className="text-gray-600 font-medium bg-gray-100">
-            <th className="px-4 py-2 text-left">Transaction</th>
-            <th className="px-4 py-2 text-left">Amount</th>
-            <th className="px-4 py-2 text-left">Status</th>
-            <th className="px-4 py-2 text-left">Date</th>
-            <th className="px-4 py-2 text-left">Category</th>
-          </tr>
-        </thead>
-        <tbody>
-          {transactions.map((tx) => (
-            <tr key={tx.id} className="border-t text-gray-800">
-              <td className="px-4 py-2">{tx.name}</td>
-              <td className="px-4 py-2">{tx.amount}</td>
-              <td
-                className={`px-4 py-2 ${
-                  tx.status === "Success" ? "text-green-600" : "text-red-600"
-                }`}
-              >
-                {tx.status}
-              </td>
-              <td className="px-4 py-2">{tx.date}</td>
-              <td className="px-4 py-2">{tx.category}</td>
+const RecentTransactions = () => {
+  const [filteredCategory, setFilteredCategory] = useState("All");
+
+  const handleFilterChange = (event) => {
+    setFilteredCategory(event.target.value);
+  };
+
+  const filteredTransactions =
+    filteredCategory === "All"
+      ? transactions
+      : transactions.filter((tx) => tx.category === filteredCategory);
+
+  return (
+    <div className="bg-white shadow rounded-md p-6">
+      {/* Header with Filter Dropdown */}
+      <div className="flex items-center justify-between mb-4">
+        <h2 className="text-2xl font-bold text-gray-800">
+          Recent Transactions
+        </h2>
+        <div className="relative">
+          <select
+            value={filteredCategory}
+            onChange={handleFilterChange}
+            className="border border-gray-300 rounded-md px-4 py-2 text-gray-800 bg-white shadow focus:outline-none"
+          >
+            {categories.map((category) => (
+              <option key={category} value={category}>
+                {category}
+              </option>
+            ))}
+          </select>
+        </div>
+      </div>
+
+      {/* Transactions Table */}
+      <div id="transactionslist" className="overflow-auto max-h-96">
+        <table className="min-w-full table-auto">
+          <thead>
+            <tr className="text-gray-600 font-medium bg-gray-100">
+              <th className="px-4 py-2 text-left">Transaction</th>
+              <th className="px-4 py-2 text-left">Amount</th>
+              <th className="px-4 py-2 text-left">Status</th>
+              <th className="px-4 py-2 text-left">Date</th>
+              <th className="px-4 py-2 text-left">Category</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {filteredTransactions.map((tx) => (
+              <tr key={tx.id} className="border-t text-gray-800">
+                <td className="px-4 py-2">{tx.name}</td>
+                <td className="px-4 py-2">{tx.amount}</td>
+                <td
+                  className={`px-4 py-2 ${
+                    tx.status === "Success" ? "text-green-600" : "text-red-600"
+                  }`}
+                >
+                  {tx.status}
+                </td>
+                <td className="px-4 py-2">{tx.date}</td>
+                <td className="px-4 py-2">{tx.category}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        {/* Show a message if no transactions are found */}
+        {filteredTransactions.length === 0 && (
+          <div className="text-center text-gray-500 py-4">
+            No transactions found for the selected category.
+          </div>
+        )}
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 export default RecentTransactions;

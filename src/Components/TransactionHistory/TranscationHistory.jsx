@@ -1,36 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
 import LeftSideBar from "../SideBars/LeftSideBar";
 import RecentTransactions from "../other/RecentTransactions";
 import TotalAccountBalance from "../other/TotalAccountBalance";
+import TransactionHistoryHeader from "./TransactionHistoryHeader";
 
 const TranscationHistory = () => {
+  const [selectedBank, setSelectedBank] = useState("");
   return (
-    <div>
-      <div className="w-2/12">
+    <div className="grid grid-cols-12 min-h-screen gap-1">
+      <div className="col-span-2 rounded">
         <LeftSideBar />
       </div>
-      <div className="w-10/12 ml-64 p-6 h-full max-h-32">
-        <h1 className="font-semibold text-4xl text-black w-10/12">
-          Transaction History
-        </h1>
-        <p className="my-2 w-10/12">
-          Gain Insights and Track Your Transactions Over Time
-        </p>
-        <div className="flex justify-end mr-10">
-          <select className="outline-none" name="cars" id="cars">
-            <option value="ICICI">ICICI</option>
-            <option value="HDFC">HDFC</option>
-            <option value="SBI">SBI</option>
-            <option value="Bank of Baroda">Bank of Baroda</option>
-          </select>
+      <div className="col-span-10 grid-rows-12 rounded">
+        <div className="row-span-2 rounded">
+          <TransactionHistoryHeader
+            selectedBank={selectedBank}
+            setSelectedBank={setSelectedBank}
+          />
         </div>
-      </div>
-      <div className="w-10/12 ml-[280px]">
-        <TotalAccountBalance />
-      </div>
-
-      <div className="w-10/12 ml-[260px]">
-        <RecentTransactions />
+        <div className="row-span-3 mt-1 rounded">
+          <TotalAccountBalance totalBalance={45000} />
+        </div>
+        <div className="row-span-7 mt-3 rounded">
+          <RecentTransactions />
+        </div>
       </div>
     </div>
   );

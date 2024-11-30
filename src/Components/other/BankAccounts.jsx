@@ -9,7 +9,7 @@ const BankAccounts = () => {
     },
   ];
   return (
-    <div className=" bg-white shadow rounded-md p-6">
+    <div className="bg-white shadow rounded-md p-6">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-xl font-bold text-gray-800">My Banks</h2>
         <button className="text-blue-500 font-medium">+ Add bank</button>
